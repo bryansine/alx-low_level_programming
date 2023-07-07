@@ -1,19 +1,25 @@
 #include <stdio.h>
-#include "main.h"
+#include <stdlib.h>
 
 /**
- * main - prints all arguments it receives
- * @argc: number of arguments
- * @argv: array of arguments            
- *
- * Return: Always 0 (Success)           
+ * main - multiplies two numbers
+ * @argc: n args
+ * @argv: arr args
+ * Return: 0
  */
 int main(int argc, char *argv[])
 {
-        int i;
-        for (i = 0; i < argc; i++)
-        {
-                printf("%s\n", argv[i]);
-        }
-        return (0);
+	int i, val = 1;
+
+	if (argc != 3)
+	{
+		printf("Error\n");
+		return (1);
+	}
+	for (i = 1; i < argc; i++)
+	{
+		val *= atoi(argv[i]);
+	}
+	printf("%d\n", val);
+	return (0);
 }
