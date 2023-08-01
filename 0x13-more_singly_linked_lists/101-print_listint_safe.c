@@ -1,29 +1,80 @@
 #include "lists.h"
+#include <stdio.h>
 
+size_t looped_listint_y(const listint_t *head);
+size_t print_listint_safe(const listint_t *head);
 /**
- * print_listint_safe - prints a linked list, safely
- * @head: list of type listint_t to print
- *
- * Return: the number of nodes in the list
- */
-size_t print_listint_safe(const listint_t *head)
+  * looped_listint_y - functions that counts unique nodes
+  * @head: head the node
+  * Return: the number of unique nodes
+  */
+size_t looped_listint_y(const listint_t *head)
 {
-	size_t num = 0;
-	long int diff;
+	const listint_t *a, *b;
+	size_t x = 1;
 
-	while (head)
+	if (head == NULL || head->next == NULL)
+		return (0);
+	a = head->next;
+	b = (head->next)->next;
+	while (b)
 	{
-		diff = head - head->next;
-		num++;
-		printf("[%p] %d\n", (void *)head, head->n);
-		if (diff > 0)
-			head = head->next;
-		else
+		if (a == b)
 		{
-			printf("-> [%p] %d\n", (void *)head->next, head->next->n);
-			break;
+			a = head;
+			while (a != b)
+			{
+				x++;
+				a = a->next;
+				b = b->next;
+			}
+
+			a = a->next;
+			while (a != b)
+			{
+				x++;
+				a = a->next;
+			}
+			return (x);
 		}
+			a = a->next;
+			b = (b->next)->next;
 	}
 
-	return (num);
+	return (0);
+}
+
+
+/**
+  * print_listint_safe - function that prints a listint_t linked list
+  * @head: the head of the linked list
+  * Return: the number of nodes in the list
+  */
+size_t print_listint_safe(const listint_t *head)
+{
+	size_t x, index = 0;
+
+	x = looped_listint_y(head);
+
+	if (x == 0)
+	{
+		while (head != NULL)
+		{
+			printf("[%p] %d\n", (void *)head, head->n);
+			head = head->next;
+			index++;
+		}
+	}
+	else
+	{
+		while (index < x)
+		{
+			printf("[%p] %d\n", (void *)head, head->n);
+			head = head->next;
+			index++;
+		}
+
+		printf("-> [%p] %d\n", (void *)head, head->n);
+	}
+	return (x);
 }
