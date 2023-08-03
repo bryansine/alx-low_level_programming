@@ -1,80 +1,19 @@
 #include "lists.h"
-#include <stdio.h>
-
-size_t looped_listint_y(const listint_t *head);
-size_t print_listint_safe(const listint_t *head);
 /**
-  * looped_listint_y - functions that counts unique nodes
-  * @head: head the node
-  * Return: the number of unique nodes
-  */
-size_t looped_listint_y(const listint_t *head)
+ * print_listint - prints all the elements of a linked list
+ * @h: linked list of type listint_t to print
+ *
+ * Return: number of nodes
+ */
+size_t print_listint(const listint_t *h)
 {
-	const listint_t *a, *b;
-	size_t x = 1;
+	size_t num = 0;
 
-	if (head == NULL || head->next == NULL)
-		return (0);
-	a = head->next;
-	b = (head->next)->next;
-	while (b)
+	while (h)
 	{
-		if (a == b)
-		{
-			a = head;
-			while (a != b)
-			{
-				x++;
-				a = a->next;
-				b = b->next;
-			}
-
-			a = a->next;
-			while (a != b)
-			{
-				x++;
-				a = a->next;
-			}
-			return (x);
-		}
-			a = a->next;
-			b = (b->next)->next;
+		printf("%d\n", h->n);
+		num++;
+		h = h->next;
 	}
-
-	return (0);
-}
-
-
-/**
-  * print_listint_safe - function that prints a listint_t linked list
-  * @head: the head of the linked list
-  * Return: the number of nodes in the list
-  */
-size_t print_listint_safe(const listint_t *head)
-{
-	size_t x, index = 0;
-
-	x = looped_listint_y(head);
-
-	if (x == 0)
-	{
-		while (head != NULL)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-			index++;
-		}
-	}
-	else
-	{
-		while (index < x)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-			index++;
-		}
-
-		printf("-> [%p] %d\n", (void *)head, head->n);
-	}
-	return (x);
+	return (num);
 }
